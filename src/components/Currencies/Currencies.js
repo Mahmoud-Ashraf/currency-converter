@@ -1,23 +1,69 @@
 import { useEffect, useState } from "react";
+import useHTTP from "../../Hooks/use-http";
 
 const Currencies = () => {
 
+    const { isLoading, error, sendRequest } = useHTTP();
     const [symbols, setSymbols] = useState([]);
+    const [currencies, setCurrencies] = useState({ from: 'EUR', to: 'USD' });
+    const [amount, setAmount] = useState(1);
+    const [rate, setRate] = useState(0);
+    const [convertError, setConvertError] = useState();
 
     useEffect(() => {
         getSymbols();
+        convertCurrency();
     }, [])
 
     const getSymbols = () => {
-        fetch('http://data.fixer.io/api/symbols?access_key=ba2593d138a4ce82dd1a3fb9f3adc861').then(async response => {
-            const data = await response.json();
-            setSymbols(Object.entries(data.symbols));
+        sendRequest(
+            {
+                url: `symbols`,
+                method: 'GET'
+            },
+            data => {
+                setSymbols(Object.entries(data.symbols));
+            },
+            err => { }
+        )
+    }
+
+    const reverseCurrency = () => {
+        setRate(0);
+        setCurrencies(prev => {
+            return { from: prev.to, to: prev.from }
         })
     }
 
-    // const test = () => {
-    //     fetch('http://data.fixer.io/api/latest?access_key=ba2593d138a4ce82dd1a3fb9f3adc861').then(data => console.log(data));
-    // }
+    const changeFromHandler = (e) => {
+        setRate(0);
+        setCurrencies(prev => {
+            return { from: e.target.value, to: prev.to }
+        })
+    }
+    const changeToHandler = (e) => {
+        setRate(0);
+        setCurrencies(prev => {
+            return { from: prev.from, to: e.target.value }
+        })
+    }
+
+    const convertCurrency = () => {
+        sendRequest(
+            {
+                url: `latest?base=${currencies.from}&symbols=${currencies.to}`,
+                method: 'GET'
+            },
+            data => {
+                setRate(data.rates[currencies.to]);
+                setConvertError();
+            },
+            err => {
+                setConvertError(err);
+            }
+        )
+    }
+
     return (
         <div className="container-fluid">
             <div className="border p-4 rounded">
@@ -25,15 +71,15 @@ const Currencies = () => {
                     <div className="col-4 d-flex flex-column justify-content-between">
                         <div>
                             <label className="form-label">Amount</label>
-                            <input className="form-control text-center" type="number" />
+                            <input className="form-control text-center" value={amount} type="number" onChange={(e) => setAmount(e.target.value)} />
                         </div>
-                        <p className="converted-currency-value mb-0">1.00 EUR = XX XXX USD</p>
+                        <p className="converted-currency-value mb-0">1.00 {currencies.from} = {rate ? rate : 'XX.XXX'} {currencies.to}</p>
                     </div>
                     <div className="col-8">
                         <div className="row justify-content-between align-items-end">
                             <div className="col-5">
                                 <label className="form-label">From</label>
-                                <select class="form-select">
+                                <select className="form-select" value={currencies.from} onChange={changeFromHandler}>
                                     {
                                         symbols.map(symbol => {
                                             return (
@@ -44,11 +90,11 @@ const Currencies = () => {
                                 </select>
                             </div>
                             <div className="col-auto">
-                                <button className="btn btn-primary"><i class="fa-solid fa-arrow-right-arrow-left"></i></button>
+                                <button className="btn btn-primary" onClick={reverseCurrency}><i className="fa-solid fa-arrow-right-arrow-left"></i></button>
                             </div>
                             <div className="col-5">
                                 <label className="form-label">To</label>
-                                <select class="form-select">
+                                <select className="form-select" value={currencies.to} onChange={changeToHandler}>
                                     {
                                         symbols.map(symbol => {
                                             return (
@@ -61,12 +107,15 @@ const Currencies = () => {
                         </div>
                         <div className="row mt-3">
                             <div className="col-12">
-                                <button className="btn btn-outline-primary w-100">Convert</button>
+                                <button className="btn btn-outline-primary w-100" onClick={convertCurrency}>Convert</button>
+                                {convertError && <div className="alert alert-danger mt-3">
+                                    {convertError}
+                                </div>}
                             </div>
                         </div>
                         <div className="row mt-3 align-items-center">
                             <div className="col-7">
-                                <p className="converted-currency-value mb-0">XX XXX USD</p>
+                                <p className="converted-currency-value mb-0">{rate ? (rate * amount) : 'XX.XX'} {currencies.to}</p>
                             </div>
                             <div className="col-5">
                                 <button className="btn btn-outline-primary w-100">More Details</button>
@@ -75,7 +124,7 @@ const Currencies = () => {
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     )
 }
 export default Currencies;

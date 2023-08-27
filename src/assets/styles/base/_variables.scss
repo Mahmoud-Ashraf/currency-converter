@@ -13,6 +13,7 @@ $gray-700: #464646;
 $gray-800: #393939;
 $gray-900: #1e1e1e;
 
+$red-300: #ff3535;
 
 // Base
 $main-color: #FFD700;
@@ -35,5 +36,6 @@ $header-border: 1px solid $header-border-color;
 
 // override Bootstrap Varibales
 $theme-colors: (
-    primary: $main-color
+    primary: $main-color,
+    danger: $red-300
 );
