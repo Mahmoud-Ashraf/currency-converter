@@ -3,16 +3,16 @@ import useHTTP from "../../Hooks/use-http";
 
 const Currencies = () => {
 
-    const { isLoading, error, sendRequest } = useHTTP();
+    const { error, sendRequest } = useHTTP();
     const [symbols, setSymbols] = useState([]);
     const [currencies, setCurrencies] = useState({ from: 'EUR', to: 'USD' });
     const [amount, setAmount] = useState(1);
     const [rate, setRate] = useState(0);
-    const [convertError, setConvertError] = useState();
 
     useEffect(() => {
         getSymbols();
         convertCurrency();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const getSymbols = () => {
@@ -24,7 +24,7 @@ const Currencies = () => {
             data => {
                 setSymbols(Object.entries(data.symbols));
             },
-            err => { }
+            err => {}
         )
     }
 
@@ -56,11 +56,8 @@ const Currencies = () => {
             },
             data => {
                 setRate(data.rates[currencies.to]);
-                setConvertError();
             },
-            err => {
-                setConvertError(err);
-            }
+            err => {}
         )
     }
 
@@ -108,8 +105,8 @@ const Currencies = () => {
                         <div className="row mt-3">
                             <div className="col-12">
                                 <button className="btn btn-outline-primary w-100" onClick={convertCurrency}>Convert</button>
-                                {convertError && <div className="alert alert-danger mt-3">
-                                    {convertError}
+                                {error && <div className="alert alert-danger mt-3">
+                                    {error}
                                 </div>}
                             </div>
                         </div>
