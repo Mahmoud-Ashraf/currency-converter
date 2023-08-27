@@ -33,4 +33,7 @@ $header-bg: $gray-200;
 $header-border-color: $gray-300;
 $header-border: 1px solid $header-border-color;
 
-// 
+// override Bootstrap Varibales
+$theme-colors: (
+    primary: $main-color
+);

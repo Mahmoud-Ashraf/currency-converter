@@ -6,6 +6,8 @@
     align-items: center;
     border-bottom: $header-border;
     margin-bottom: 2rem;
+    position: sticky;
+    top: 0;
     &-logo {
         font-size: 2rem;
         color: $main-color;

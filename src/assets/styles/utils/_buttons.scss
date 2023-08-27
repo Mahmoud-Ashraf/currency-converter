@@ -3,6 +3,7 @@ button {
     border: $btn-border;
     background-color: $btn-bg;
     transition: all .3s ease-in-out;
+    color: $text-color;
     &:hover {
         background-color: $btn-hover-bg;
         color: $btn-hover-color;
