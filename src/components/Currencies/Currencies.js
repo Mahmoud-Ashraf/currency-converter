@@ -73,7 +73,7 @@ const Currencies = () => {
                             <label className="form-label">Amount</label>
                             <input className="form-control text-center" value={amount} type="number" onChange={(e) => setAmount(e.target.value)} />
                         </div>
-                        <p className="converted-currency-value mb-0">1.00 {currencies.from} = {rate ? rate : 'XX.XXX'} {currencies.to}</p>
+                        <p className="converted-currency-value mb-0">1.00 {currencies.from} = {rate || 'XX.XXX'} {currencies.to}</p>
                     </div>
                     <div className="col-8">
                         <div className="row justify-content-between align-items-end">
@@ -115,7 +115,7 @@ const Currencies = () => {
                         </div>
                         <div className="row mt-3 align-items-center">
                             <div className="col-7">
-                                <p className="converted-currency-value mb-0">{rate ? (rate * amount) : 'XX.XX'} {currencies.to}</p>
+                                <p className="converted-currency-value mb-0">{(rate * amount) || 'XX.XX'} {currencies.to}</p>
                             </div>
                             <div className="col-5">
                                 <button className="btn btn-outline-primary w-100">More Details</button>
