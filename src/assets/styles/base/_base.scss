@@ -1,3 +1,9 @@
+@import './variables';
 @import './fonts';
 @import './typography';
 @import './helpers';
+
+body {
+    margin: 0;
+    background-color: $main-bg;
+}

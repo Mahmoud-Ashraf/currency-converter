@@ -1,0 +1,10 @@
+button {
+    padding: $btn-padding;
+    border: $btn-border;
+    background-color: $btn-bg;
+    transition: all .3s ease-in-out;
+    &:hover {
+        background-color: $btn-hover-bg;
+        color: $btn-hover-color;
+    }
+}

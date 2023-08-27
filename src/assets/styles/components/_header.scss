@@ -1,0 +1,17 @@
+.header {
+    display: flex;
+    padding: .5rem 1rem;
+    justify-content: space-between;
+    background-color: $header-bg;
+    align-items: center;
+    border-bottom: $header-border;
+    margin-bottom: 2rem;
+    &-logo {
+        font-size: 2rem;
+        color: $main-color;
+    }
+    &-actions {
+        display: flex;
+        gap: 1rem;
+    }
+}

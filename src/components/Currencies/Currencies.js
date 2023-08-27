@@ -1,7 +1,6 @@
 const Currencies = () => {
     return (
-        <div>
-        </div>
+        <div> Currencies Component Working</div>
     )
 }
 export default Currencies;

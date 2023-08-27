@@ -1,6 +1,14 @@
+import Currencies from "../../components/Currencies/Currencies";
+import Header from "../Header/Header";
+import { Outlet } from 'react-router-dom';
+
 const LayoutWrapper = () => {
     return (
-        <div> LayoutWrapper Component Working </div>
+        <div>
+            <Header />
+            <Currencies />
+            <Outlet />
+        </div>
     )
 }
 export default LayoutWrapper;
