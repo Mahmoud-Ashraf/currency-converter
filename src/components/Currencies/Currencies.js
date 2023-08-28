@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import useHTTP from "../../Hooks/use-http";
+import { useDispatch } from 'react-redux';
+import { ConvertionActions } from "../../store/Convertion/Convertion";
 
 const Currencies = () => {
 
@@ -8,6 +10,7 @@ const Currencies = () => {
     const [currencies, setCurrencies] = useState({ from: 'EUR', to: 'USD' });
     const [amount, setAmount] = useState(1);
     const [rate, setRate] = useState(0);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         getSymbols();
@@ -24,7 +27,7 @@ const Currencies = () => {
             data => {
                 setSymbols(Object.entries(data.symbols));
             },
-            err => {}
+            err => { }
         )
     }
 
@@ -56,8 +59,9 @@ const Currencies = () => {
             },
             data => {
                 setRate(data.rates[currencies.to]);
+                dispatch(ConvertionActions.convert({ rate: data.rates[currencies.to], from: currencies.from, to: currencies.to, amount: amount }))
             },
-            err => {}
+            err => { }
         )
     }
 
@@ -112,7 +116,7 @@ const Currencies = () => {
                         </div>
                         <div className="row mt-3 align-items-center">
                             <div className="col-7">
-                                <p className="converted-currency-value mb-0">{(rate * amount) || 'XX.XX'} {currencies.to}</p>
+                                <p className="converted-currency-value mb-0">{amount} {currencies.from} = {(rate * amount) || 'XX.XX'} {currencies.to}</p>
                             </div>
                             <div className="col-5">
                                 <button className="btn btn-outline-primary w-100">More Details</button>
