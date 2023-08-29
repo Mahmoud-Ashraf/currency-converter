@@ -1,6 +1,10 @@
+import HistoricalChart from "../../components/HistoricalChart/HistoricalChart";
+
 const CurrencyDetails = () => {
     return (
-        <div> CurrencyDetails Component Working </div>
+        <div>
+            <HistoricalChart />
+        </div>
     )
 }
 export default CurrencyDetails;
