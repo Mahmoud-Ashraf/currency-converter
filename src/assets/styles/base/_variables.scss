@@ -37,5 +37,6 @@ $header-border: 1px solid $header-border-color;
 // override Bootstrap Varibales
 $theme-colors: (
     primary: $main-color,
-    danger: $red-300
+    danger: $red-300,
+    dark: $gray-900
 );

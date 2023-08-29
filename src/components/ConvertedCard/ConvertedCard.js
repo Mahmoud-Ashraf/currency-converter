@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 const ConvertedCard = (props) => {
     const [rate, setRate] = useState(0);
     const convertion = useSelector(state => state.convertion);
-    const { sendRequest } = useHTTP();
+    const { error, sendRequest } = useHTTP();
 
     useEffect(() => {
         convertCurrency();
@@ -21,13 +21,21 @@ const ConvertedCard = (props) => {
             data => {
                 setRate(data.rates[props.to]);
             },
-            err => { }
+            err => {
+                setRate(0);
+            }
         )
     }
     return (
         <div className="border rounded p-5 text-center">
+
             <p className="fs-5 mb-0">1.00 {convertion.from} = {rate || 'XX.XXX'} {props.to}</p>
             <p className="fs-5 mb-0">{convertion.amount} {convertion.from} = {(rate * convertion.amount) || 'XX.XX'} {props.to}</p>
+            {
+                error &&
+                <p className="alert alert-danger">{error}</p>
+            }
+
         </div>
     )
 }
