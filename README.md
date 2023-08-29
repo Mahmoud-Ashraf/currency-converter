@@ -49,5 +49,4 @@ To retrieve historical exchange rates for a specific currency (e.g., `USD`) for 
 
 5. **Customization:** You can customize the base and target currencies by setting the `convertion.from` and `convertion.to` values in your app.
 
-
-export default App;
+This section provides an explanation of how your `HistoricalChart` component interacts with the Fixer.io Historical Rates API to fetch monthly data for the last year. It also guides users on how they can use this functionality in their own projects.
