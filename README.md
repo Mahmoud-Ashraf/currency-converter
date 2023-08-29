@@ -1,70 +1,53 @@
-# Getting Started with Create React App
+# Currency Converter
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+React app to get rates of any currency.
 
-## Available Scripts
+## Usage
 
-In the project directory, you can run:
+If API not working please allow insecure content from site settings on your browser.
 
-### `npm start`
+## API
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+I used a Fixer.io API with free subscription so I have only 1000 requests per month, If you need to 
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Limitations
 
-### `npm test`
+The app uses a free subscription to Fixer.io, which provides a limited number of requests (1000 requests per month).
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Make sure to replace the access key in the .env file with your own access key from Fixer.io.
 
-### `npm run build`
+```javascript
+// .env
+REACT_APP_API_KEY = 'YOUR_ACCESS_KEY';
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Implementation
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+The app uses a free subscription to Fixer.io, which provides a limited number of requests (1000 requests per month).
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Make sure to replace the access key in the .env file with your own access key from Fixer.io.
 
-### `npm run eject`
+```javascript
+// .env
+REACT_APP_API_KEY = 'YOUR_ACCESS_KEY';
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Using Historical Rates API for Last Year's Monthly Data
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+To retrieve historical exchange rates for a specific currency (e.g., `USD`) for each month of the last year, you can utilize the Historical Rates API provided by Fixer.io. This example demonstrates how the app's `HistoricalChart` component accomplishes this.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+1. **API Endpoint:** The API endpoint used in the app is of the form:
+- `YYYY-MM-DD`: Date for the last day of each month within the last year.
+- `BASE_CURRENCY`: The base currency you want to convert from.
+- `TARGET_CURRENCY`: The target currency you want to convert to.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+2. **Loop through Months:** The `renderChart` function in the `HistoricalChart` component loops through each month and constructs the API endpoint for the last day of that month in the previous year. It then makes a request to the Fixer.io API using the `getChartData` function and appends the returned data to the `chartData` state.
 
-## Learn More
+3. **Handling Dates:** The `getChartData` function constructs the API URL and sends a request to Fixer.io. The component uses the data returned from the API to populate the `chartData` state, which is used to render the chart.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+4. **Displaying Data:** The `chartData` is used to create the dataset for the chart. The component sorts the data by timestamp and maps the exchange rates for the target currency into an array.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+5. **Customization:** You can customize the base and target currencies by setting the `convertion.from` and `convertion.to` values in your app.
 
-### Code Splitting
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+export default App;
