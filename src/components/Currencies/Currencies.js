@@ -76,7 +76,7 @@ const Currencies = () => {
 
     const convertCurrency = () => {
         const fromName = symbols?.find(symbol => symbol[0] === currencies?.from);
-        dispatch(ConvertionActions.convert({ from: currencies.from, to: currencies.to, amount: amount, fromName: fromName ? fromName : '' }))
+        dispatch(ConvertionActions.convert({ from: currencies.from, to: currencies.to, amount: amount, fromName: fromName ? fromName[1] : '' }))
         sendRequest(
             {
                 url: `latest?base=${currencies.from}&symbols=${currencies.to}`,
